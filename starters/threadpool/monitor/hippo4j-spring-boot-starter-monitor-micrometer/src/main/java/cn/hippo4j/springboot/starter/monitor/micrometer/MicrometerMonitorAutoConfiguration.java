@@ -25,6 +25,7 @@ import cn.hippo4j.monitor.micrometer.DynamicThreadPoolMicrometerMonitorHandler;
 import cn.hippo4j.monitor.micrometer.WebThreadPoolMicrometerMonitorHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnBean(MarkerConfiguration.Marker.class)
 @ConditionalOnExpression("'${spring.dynamic.thread-pool.monitor.collect-types:}'.contains('micrometer')")
+@ConditionalOnProperty(prefix = "spring.dynamic.thread-pool.monitor", name = "enable", havingValue = "true")
 public class MicrometerMonitorAutoConfiguration {
 
     @Bean

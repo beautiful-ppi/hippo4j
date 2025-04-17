@@ -27,6 +27,7 @@ import cn.hippo4j.springboot.starter.adapter.web.WebThreadPoolHandlerConfigurati
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -41,6 +42,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
         cn.hippo4j.springboot3.starter.adapter.web.WebThreadPoolHandlerConfiguration.EmbeddedUndertow.class})
 @RequiredArgsConstructor
 @AutoConfigureAfter(UtilAutoConfiguration.class)
+@ConditionalOnProperty(prefix = "spring.dynamic.thread-pool.monitor", name = "enable", havingValue = "true")
 public class WebAdapterConfiguration {
 
     private final ConfigurableEnvironment environment;

@@ -122,6 +122,9 @@ public class ThreadPoolController {
     @GetMapping("/run/state/{tpId}")
     public Result runState(@PathVariable("tpId") String tpId,
                            @RequestParam(value = "clientAddress") String clientAddress) {
+        if (clientAddress.endsWith("/")) {
+            clientAddress = clientAddress.substring(0, clientAddress.length() - 1);
+        }
         String urlString = StringUtil.newBuilder(HTTP, clientAddress, "/run/state/", tpId);
         return HttpUtil.get(urlString, Result.class);
     }
@@ -129,6 +132,9 @@ public class ThreadPoolController {
     @GetMapping("/run/thread/state/{tpId}")
     public Result runThreadState(@PathVariable("tpId") String tpId,
                                  @RequestParam(value = "clientAddress") String clientAddress) {
+        if (clientAddress.endsWith("/")) {
+            clientAddress = clientAddress.substring(0, clientAddress.length() - 1);
+        }
         String urlString = StringUtil.newBuilder(HTTP, clientAddress, "/run/thread/state/", tpId);
         return HttpUtil.get(urlString, Result.class);
     }
@@ -167,12 +173,18 @@ public class ThreadPoolController {
     @GetMapping("/web/base/info")
     public Result getPoolBaseState(@RequestParam(value = "mark") String mark,
                                    @RequestParam(value = "clientAddress") String clientAddress) {
+        if (clientAddress.endsWith("/")) {
+            clientAddress = clientAddress.substring(0, clientAddress.length() - 1);
+        }
         String urlString = StringUtil.newBuilder(HTTP, clientAddress, "/web/base/info", "?mark=", mark);
         return HttpUtil.get(urlString, Result.class);
     }
 
     @GetMapping("/web/run/state")
     public Result getPoolRunState(@RequestParam(value = "clientAddress") String clientAddress) {
+        if (clientAddress.endsWith("/")) {
+            clientAddress = clientAddress.substring(0, clientAddress.length() - 1);
+        }
         String urlString = StringUtil.newBuilder(HTTP, clientAddress, "/web/run/state");
         return HttpUtil.get(urlString, Result.class);
     }
@@ -181,6 +193,9 @@ public class ThreadPoolController {
     public Result<Void> updateWebThreadPool(@RequestBody WebThreadPoolReqDTO requestParam) {
         if (UserContext.getUserRole().equals("ROLE_ADMIN")) {
             for (String each : requestParam.getClientAddressList()) {
+                if (each.endsWith("/")) {
+                    each = each.substring(0, each.length() - 1);
+                }
                 String urlString = StringUtil.newBuilder(HTTP, each, "/web/update/pool");
                 HttpUtil.post(urlString, requestParam);
             }

@@ -67,6 +67,9 @@ public class ThreadPoolAdapterController {
     public Result<Void> updateAdapterThreadPool(@RequestBody ThreadPoolAdapterReqDTO requestParameter) {
         if (UserContext.getUserRole().equals("ROLE_ADMIN")) {
             for (String each : requestParameter.getClientAddressList()) {
+                if (each.endsWith("/")) {
+                    each = each.substring(0, each.length() - 1);
+                }
                 String urlString = StringUtil.newBuilder("http://", each, "/adapter/thread-pool/update");
                 HttpUtil.post(urlString, requestParameter);
             }
